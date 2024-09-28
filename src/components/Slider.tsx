@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera } from "@react-three/drei";
 import projectsData from "../data.json";
 import { ProjectType } from "../Types";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 const rad = (deg: number) => (deg * Math.PI) / 180.0;
 
 const progressPosition = (progress: number) => {
@@ -25,8 +25,7 @@ const Slider = () => {
     const delta = e.deltaY * 0.0005;
     setProgress((prev) => prev + delta);
   };
-
-  useMemo(() => {
+  useEffect(() => {
     window.addEventListener("wheel", handleScroll, true);
     return () => {
       window.removeEventListener("wheel", handleScroll, true);
@@ -47,7 +46,7 @@ const Slider = () => {
           {[...Array(projectsData.length)].map((_, i) => (
             <mesh
               key={i}
-              position={[0, 0, progressPosition(progress + -i * 2)]}
+              position={[0, 0, progressPosition(progress - i * 2)]}
               scale={[6, 4, 1]}
             >
               <planeGeometry />
