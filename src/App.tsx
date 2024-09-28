@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
 import Slider from "./components/Slider";
-import Redirection from "./components/Redirection";
+import ProjectPage from "./components/ProjectPage";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Slider />
       <Routes>
-        <Route path="/*" element={<Redirection />} />
+        <Route path="/*" element={<ProjectPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
       </Routes>

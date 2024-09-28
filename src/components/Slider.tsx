@@ -25,6 +25,7 @@ const Slider = () => {
     const delta = e.deltaY * 0.0005;
     setProgress((prev) => prev + delta);
   };
+
   useEffect(() => {
     window.addEventListener("wheel", handleScroll, true);
     return () => {
