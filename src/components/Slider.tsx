@@ -1,45 +1,47 @@
 import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera } from "@react-three/drei";
 import projectsData from "../data.json";
-import { ProjectType } from "../Types";
-import { useEffect, useState } from "react";
-const rad = (deg: number) => (deg * Math.PI) / 180.0;
+import { useEffect, useState, useRef, useMemo } from "react";
+import { Plane } from "three";
+import Thumbnail from "./Thumbnail";
+import { useLocation } from "react-router-dom";
 
-const progressPosition = (progress: number) => {
-  return Math.atan(progress) * 8 + progress * 0.5;
-  // if (progress < -2.18) {
-  //   return progress * 0.5 - 12;
-  // } else if (progress < 2.18) {
-  //   return progress * 6;
-  // } else {
-  //   return progress * 0.5 + 12;
-  // }
+const toRad = (deg: number) => (deg * Math.PI) / 180.0;
+
+const sliderLength = (mobile: boolean) => {
+  return (projectsData.length - 1) * (mobile ? 1 : 2);
 };
-
-const progressScale = (progress: number) => {
-  return Math.atan(-1 * progress ** 2) * 0.5 + 2.5;
+const isHomeFunction = (location) => {
+  console.log("update");
+  return location.pathname.split("/")[1].length == 0;
 };
 
 const Slider = () => {
-  const mobile = window.innerWidth < 768;
-  const [progress, setProgress] = useState(0);
-  console.log(progress, projectsData.length);
+  const location = useLocation();
+  const isHome: boolean = useMemo(() => isHomeFunction(location), [location]);
 
-  // on scroll event increase or decrease progress
+  const isMobile = window.innerWidth < 768;
+  const [progress, setProgress] = useState(0);
+
   const handleScroll = (e: WheelEvent) => {
-    const delta = e.deltaY * 0.001;
-    setProgress((prev) => prev + delta);
+    if (!isHome) return;
+    const delta = e.deltaY * 0.003;
+    setProgress((prev) =>
+      Math.max(Math.min(prev + delta, sliderLength(isMobile)), 0)
+    );
   };
+
+  useEffect(() => {}, [isHome]);
 
   useEffect(() => {
     window.addEventListener("wheel", handleScroll, true);
     return () => {
       window.removeEventListener("wheel", handleScroll, true);
     };
-  }, []);
+  });
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full" id="canvas">
       <Canvas frameloop="demand">
         <OrthographicCamera
           makeDefault
@@ -48,24 +50,15 @@ const Slider = () => {
           far={200}
           position={[0, 0, 100]}
         />
-        <group rotation={[rad(40), rad(-40), 0]}>
+        <group rotation={[toRad(40), toRad(-40), 0]}>
           {[...Array(projectsData.length)].map((_, i) => (
-            <mesh
-              key={i}
-              position={[
-                0,
-                0,
-                progressPosition(progress - i * (mobile ? 1 : 2)),
-              ]}
-              scale={[
-                3 * progressScale(progress - i * (mobile ? 1 : 2)),
-                2.5 * progressScale(progress - i * (mobile ? 1 : 2)),
-                1,
-              ]}
-            >
-              <planeGeometry />
-              <meshBasicMaterial color={`hsl(${i * 10},100%,50%)`} />
-            </mesh>
+            <Thumbnail
+              index={i}
+              progress={progress}
+              setProgress={setProgress}
+              isMobile={isMobile}
+              isHome={isHome}
+            />
           ))}
         </group>
       </Canvas>

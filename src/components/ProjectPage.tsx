@@ -1,13 +1,12 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { ProjectType } from "../Types";
-import { useNavigationType } from "react-router-dom";
 import projectsData from "../data.json";
 import { useLocation } from "react-router-dom";
 
 const ProjectPage = () => {
   // const navigationType: string | null = useNavigationType();
   const location = useLocation();
-  const projectData = useMemo(() => {
+  const projectData = useMemo<ProjectType | undefined>(() => {
     return projectsData.find((p) => p.name === location.pathname.split("/")[1]);
   }, [location]);
   console.log(projectData);
