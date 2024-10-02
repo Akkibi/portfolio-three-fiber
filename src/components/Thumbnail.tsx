@@ -105,6 +105,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   }, [progress, isHome]);
 
   useGSAP(() => {
+    // console.log("isOpen", isOpen, index);
     if (isHome) return;
     // console.log("scale?", isOpen, index);
     if (!isOpen) {
