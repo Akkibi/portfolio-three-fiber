@@ -5,7 +5,8 @@ import { useGSAP } from "@gsap/react";
 import { useThree } from "@react-three/fiber";
 import projectsData from "../data.json";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import ThumbNailShader from "./ThumbnailShader";
+import { progressScale, progressPosition, isOpenFunction } from "./Utils";
 interface ThumbnailProps {
   index: number;
   progress: number;
@@ -13,18 +14,6 @@ interface ThumbnailProps {
   isMobile: boolean;
   isHome: boolean;
 }
-
-const progressPosition = (progress: number) => {
-  return Math.atan(progress) * 8 + progress * 0.5;
-};
-
-const progressScale = (progress: number) => {
-  return Math.atan(-1 * progress ** 2) * 0.5 + 2.5;
-};
-
-const isOpenFunction = (location, name: string) => {
-  return location.pathname.split("/")[1] == name;
-};
 
 const Thumbnail: React.FC<ThumbnailProps> = ({
   index,
@@ -47,6 +36,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   useGSAP(() => {
     if (isHome) {
       //to kill the initial stutter
+      invalidate();
       gsap.set(planeRef.current.position, {
         z: progressPosition(progress - index * (isMobile ? 1 : 2)),
       });
@@ -54,16 +44,21 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       gsap.set(planeRef.current.position, {
         z: progressPosition(-1 * index * (isMobile ? 1 : 2)),
       });
-      console.log("first load", isOpen, index);
+      // console.log("first load", isOpen, index);
     }
     gsap.set(planeRef.current.scale, {
-      x: 3 * progressScale(progress - index * (isMobile ? 1 : 2)),
-      y: 2.5 * progressScale(progress - index * (isMobile ? 1 : 2)),
+      x:
+        window.innerHeight *
+        0.004 *
+        progressScale(progress - index * (isMobile ? 1 : 2)),
+      y:
+        window.innerHeight *
+        0.004 *
+        progressScale(progress - index * (isMobile ? 1 : 2)),
     });
   }, []);
 
   useGSAP(() => {
-    if (!isHome) return;
     gsap.to(planeRef.current.position, {
       onUpdate: () => {
         invalidate();
@@ -72,36 +67,48 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       duration: 1,
       ease: "expo.out",
     });
-    if (isOpen) return;
-    gsap.to(planeRef.current.scale, {
-      onUpdate: () => {
-        invalidate();
-      },
-      x: 3 * progressScale(progress - index * (isMobile ? 1 : 2)),
-      y: 2.5 * progressScale(progress - index * (isMobile ? 1 : 2)),
-      duration: 1,
-      ease: "expo.out",
-    });
-    gsap.to(planeRef.current.rotation, {
-      x: 0,
-      y: 0,
-      z: 0,
-      duration: 1,
-      ease: "expo.out",
-    });
+    if (!isHome) return;
+    if (!isOpen) {
+      gsap.to(planeRef.current.scale, {
+        onUpdate: () => {
+          invalidate();
+        },
+        x:
+          window.innerHeight *
+          0.004 *
+          progressScale(progress - index * (isMobile ? 1 : 2)),
+        y:
+          window.innerHeight *
+          0.004 *
+          progressScale(progress - index * (isMobile ? 1 : 2)),
+        duration: 1,
+        ease: "expo.out",
+      });
+      gsap.to(planeRef.current.rotation, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 1,
+        ease: "expo.out",
+      });
+    } else {
+      gsap.to(planeRef.current.scale, {
+        onUpdate: () => {
+          invalidate();
+        },
+        x: 0,
+        y: 0,
+        duration: 1,
+        ease: "expo.out",
+      });
+    }
   }, [progress, isHome]);
 
   useGSAP(() => {
     if (isHome) return;
-    gsap.to(planeRef.current.position, {
-      onUpdate: () => {
-        invalidate();
-      },
-      z: progressPosition(progress - index * (isMobile ? 1 : 2)),
-      duration: 1,
-      ease: "expo.out",
-    });
+    // console.log("scale?", isOpen, index);
     if (!isOpen) {
+      // console.log("no, ok :", isOpen, index);
       gsap.to(planeRef.current.scale, {
         onUpdate: () => {
           invalidate();
@@ -120,8 +127,11 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       });
     } else {
       setProgress(index * (isMobile ? 1 : 2));
-      console.log("isfired2", isOpen, index);
+      console.log("rotatetocam", isOpen, index);
       gsap.to(planeRef.current.rotation, {
+        onUpdate: () => {
+          invalidate();
+        },
         x: -0.8308799419382282,
         y: 0.5148495139047413,
         z: 0.4946398262521617,
@@ -129,14 +139,17 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         ease: "expo.out",
       });
       gsap.to(planeRef.current.scale, {
-        onUpdate: () => {
-          invalidate();
-        },
-        x: viewport.width,
-        y: viewport.height,
+        x: isMobile ? viewport.width - 1 : viewport.width - 3,
+        y: isMobile ? viewport.width - 1 : viewport.height - 3,
         duration: 1,
         ease: "expo.out",
       });
+      gsap.to("#canvas", {
+        backgroundColor: projectsData[index].colors[1],
+        duration: 1,
+        ease: "expo.out",
+      });
+      // console.log("viewport", viewport.width, viewport.height);
     }
   }, [isOpen, viewport]);
 
@@ -152,7 +165,15 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       name={projectsData[index].name}
     >
       <planeGeometry />
-      <meshBasicMaterial color={`hsl(${index * 10},100%,50%)`} />
+      {/* <meshBasicMaterial attach="material" toneMapped={false} /> */}
+      <ThumbNailShader
+        index={index}
+        planeScale={{
+          x: isMobile ? viewport.width - 1 : viewport.width - 3,
+          y: isMobile ? viewport.width - 1 : viewport.height - 3,
+        }}
+      />
+      {/* <meshBasicMaterial color={`hsl(${index * 10},100%,50%)`} /> */}
     </mesh>
   );
 };

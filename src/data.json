@@ -658,24 +658,6 @@
   },
   {
     "type": "Artiste2D",
-    "name": "kirby",
-    "title": "kirby design",
-    "description": [
-      "Ce projet m'a appris à faire des effets 3d sur Figma en jouant avec les lumières."
-    ],
-    "images": ["kirby.png", "kirby-king.png"],
-    "webpImages": ["kirby.webp", "kirby-king.webp"],
-
-    "list": {
-      "Date": "16/10/2021",
-      "Cadre": "Projet personnel",
-      "Outils": "Figma"
-    },
-
-    "colors": ["#ffc8d9", "#2d3962"]
-  },
-  {
-    "type": "Artiste2D",
     "name": "depression",
     "title": "Illustration dépression",
     "description": [

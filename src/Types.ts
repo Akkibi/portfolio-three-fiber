@@ -18,3 +18,7 @@ export interface ProjectType {
   colors: string[];
   videos?: string[];
 }
+
+export interface LocationState {
+  pathname: string;
+}

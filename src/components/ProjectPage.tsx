@@ -9,7 +9,7 @@ const ProjectPage = () => {
   const projectData = useMemo<ProjectType | undefined>(() => {
     return projectsData.find((p) => p.name === location.pathname.split("/")[1]);
   }, [location]);
-  console.log(projectData);
+  // console.log(projectData);
 
   // useEffect(() => {
   //   if (navigationType === "POP") {
