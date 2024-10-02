@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ progress, isMobile, isHome }) => {
     <nav ref={navRef} className="fixed z-10 w-full h-full pointer-events-none ">
       <div
         className=" absolute top-5 left-1/2 flex gap-[5px] -translate-x-1/2 h-10"
-        style={{ display: isMobile ? "none" : "block" }}
+        style={{ display: isMobile ? "none" : "flex" }}
       >
         {ProjectsData.map((_, index) => (
           <div
