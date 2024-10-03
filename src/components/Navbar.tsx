@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ progress, isMobile, isHome }) => {
     <>
       <nav
         ref={navRef}
-        className="fixed z-10 w-full h-full pointer-events-none "
+        className="absolute inset-0 z-10 w-full max-h-[100svh] h-full pointer-events-none overflow-hidden"
       >
         <div
           className=" absolute top-10 left-1/2 flex gap-[5px] -translate-x-1/2 h-10"
@@ -74,9 +74,8 @@ const Navbar: React.FC<NavbarProps> = ({ progress, isMobile, isHome }) => {
             Développeur créatif front-end disponible à partir de septembre
           </p>
         </div>
-        <div className="pointer-events-auto absolute bottom-0 p-5 left-1/2 -translate-x-1/2"></div>
         <div className="flex flex-col place-items-end gap-4 absolute bottom-0 right-0 p-5 sm:p-10">
-          <Button path="akira-valade-cv-28-07-2024.pdf" innerSite={false}>
+          <Button path="Akira-valade-cv.pdf" innerSite={false}>
             CV
           </Button>
           <Button path="https://www.instagram.com/akkibi_/" innerSite={false}>

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
@@ -518,7 +518,7 @@ const About = () => {
     { scope: containerRef }
   );
 
-  const calculateScrollPercent = () => {
+  const calculateScrollPercent = useCallback(() => {
     if (!scrollRef.current || !tl.current) return;
 
     const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
@@ -527,22 +527,25 @@ const About = () => {
 
     const timelinePercent = (scrollPercent / 100) * tl.current.duration();
     tl.current.progress(timelinePercent / tl.current.duration());
-  };
-  const mouseMove = (event: MouseEvent) => {
-    const x = event.clientX / window.innerWidth - 0.5;
-    const y = event.clientY / window.innerHeight - 0.5;
-    // console.log("mouse", x, y);
+  }, []);
+  const mouseMove = useCallback(
+    (event: MouseEvent) => {
+      const x = event.clientX / window.innerWidth - 0.5;
+      const y = event.clientY / window.innerHeight - 0.5;
+      // console.log("mouse", x, y);
 
-    refArrayTo3d.forEach((ref) => {
-      if (!ref.current) return;
-      gsap.to(ref.current, {
-        duration: 0.1,
-        rotateX: -y * 15,
-        rotateY: x * 15,
-        overwrite: "auto",
+      refArrayTo3d.forEach((ref) => {
+        if (!ref.current) return;
+        gsap.to(ref.current, {
+          duration: 0.1,
+          rotateX: -y * 15,
+          rotateY: x * 15,
+          overwrite: "auto",
+        });
       });
-    });
-  };
+    },
+    [refArrayTo3d]
+  );
   useEffect(() => {
     document.title = "À propos d'Akira";
     console.log(document.body);
@@ -565,11 +568,11 @@ const About = () => {
         window.removeEventListener("mousemove", (e) => mouseMove(e));
       }
     };
-  }, []);
+  }, [mouseMove, calculateScrollPercent]);
 
   return (
     <div
-      className="max-h-[100vmin] overflow-y-scroll fixed inset-0 w-full bg-black"
+      className="max-h-[100svh] overflow-y-scroll fixed inset-0 w-full bg-black"
       ref={scrollRef}
     >
       <div id="scroll" className="h-[2000vh] w-full"></div>
@@ -733,9 +736,6 @@ const About = () => {
                 }[language]
               }
             </span>
-            {/* <span>EXPÉRIENCES</span>
-            <span>CERTIFICATION</span>
-            <span>TEMOIGNAGES</span> */}
           </h1>
         </div>
         <section
