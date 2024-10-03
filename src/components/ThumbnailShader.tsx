@@ -1,10 +1,10 @@
 import { Texture, Vector2 } from "three";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import projectsData from "../data.json";
 import imageCoverVertexShader from "./shaders/vertex.glsl";
 import imageCoverFragmentShader from "./shaders/fragment.glsl";
-import { Suspense, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
+import { useRef } from "react";
 
 const calculateScaleFactors = (texture: Texture, containerSize: Vector2) => {
   const containerAspectRatio = containerSize.x / containerSize.y;
@@ -34,16 +34,21 @@ const calculateScaleFactors = (texture: Texture, containerSize: Vector2) => {
   return { scaleFactorX, scaleFactorY };
 };
 
-const ThumbNailShader = ({
-  index,
-  planeScale,
-}: {
-  index: number;
+interface ThumbNailShaderProps {
+  name: string;
+  grayscale: number;
   planeScale: { x: number; y: number };
+}
+
+const ThumbNailShader: React.FC<ThumbNailShaderProps> = ({
+  name,
+  grayscale,
+  planeScale,
 }) => {
+  const shaderMaterial = useRef<THREE.ShaderMaterial>(null!);
   const texture = useLoader(
     THREE.TextureLoader,
-    `/assets/${projectsData[index].name}/thumbnail.png`
+    `/assets/${name}/thumbnail.png`
   );
 
   const { scaleFactorX, scaleFactorY } = useMemo(
@@ -56,6 +61,9 @@ const ThumbNailShader = ({
 
   const uniforms = useMemo(
     () => ({
+      uGrayscale: {
+        value: grayscale,
+      },
       uTexture: {
         value: texture,
       },
@@ -66,12 +74,17 @@ const ThumbNailShader = ({
         value: scaleFactorX,
       },
     }),
-    [texture, scaleFactorX, scaleFactorY]
+    []
   );
+
+  useEffect(() => {
+    shaderMaterial.current.uniforms.uGrayscale.value = grayscale;
+  }, [grayscale, shaderMaterial]);
 
   return (
     <Suspense fallback={null}>
       <shaderMaterial
+        ref={shaderMaterial}
         vertexShader={imageCoverVertexShader}
         fragmentShader={imageCoverFragmentShader}
         uniforms={uniforms}

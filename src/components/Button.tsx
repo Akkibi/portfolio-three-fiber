@@ -4,12 +4,21 @@ import { Link } from "react-router-dom";
 interface ButtonProps {
   path: string;
   innerSite: boolean;
-  children?: ReactNode; // Allow children elements
+  children?: ReactNode;
+  color?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ path, innerSite, children }) => {
+const Button: React.FC<ButtonProps> = ({
+  path,
+  innerSite,
+  children,
+  color,
+}) => {
   return (
-    <div className="text-primary pointer-events-auto decoration-none relative h-fit whitespace-nowrap font-secondaryFont text-xl uppercase text-white underline visited:text-white">
+    <div
+      className="text-primary pointer-events-auto decoration-none relative h-fit whitespace-nowrap font-secondaryFont text-xl uppercase underline visited:text-black"
+      style={{ color: color ? color : "white" }}
+    >
       {innerSite ? (
         <Link className="group w-max" to={path}>
           <svg

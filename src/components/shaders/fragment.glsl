@@ -1,5 +1,7 @@
-uniform sampler2D uTexture;
+precision lowp float;
 
+uniform sampler2D uTexture;
+uniform float uGrayscale;
 uniform float uScaleFactorX;
 uniform float uScaleFactorY;
 
@@ -13,5 +15,13 @@ void main() {
 
     st = st * 0.5 + 0.5;
 
-    gl_FragColor = texture(uTexture, st );
+    vec4 color = texture(uTexture, st);
+
+    // Convert the color to grayscale
+    float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Mix the original color with the grayscale color based on uGrayscale
+    vec3 finalColor = mix(color.rgb, vec3(gray), uGrayscale);
+
+    gl_FragColor = vec4(finalColor, color.a);
 }
