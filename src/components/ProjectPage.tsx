@@ -39,10 +39,9 @@ const ProjectPage = () => {
           {visual && (
             <div
               onClick={() => {
-                console.log("click");
                 setVisual(null);
               }}
-              className="inset-0 fixed z-20 top-0 left-0 backdrop-blur-lg"
+              className="inset-0 fixed z-20 top-0 left-0 backdrop-blur-lg cursor-pointer"
             >
               <div
                 className="h-full w-full opacity-50 absolute inset-0 -z-10"
@@ -54,7 +53,7 @@ const ProjectPage = () => {
           <Link
             to={"/"}
             tabIndex={0}
-            className="fixed z-20 top-5 left-5 sm:top-10 sm:left-10 h-10 w-10 rounded-full"
+            className="fixed z-10 top-5 left-5 sm:top-10 sm:left-10 h-10 w-10 rounded-full"
             style={{ backgroundColor: project.colors[0] }}
             id="back"
           >
@@ -95,7 +94,7 @@ const ProjectPage = () => {
               }}
             >
               <div className="px-5 sm:px-[7vw] pb-32 md:px-8vw">
-                <div className="relative w-full pb-10">
+                <div className="relative w-full pb-[10vh]">
                   <div className="bg-primary absolute inset-0 z-0 opacity-10"></div>
                   <picture className=" relative z-10 max-h-[120vh] w-full bg-center object-contain">
                     <source
@@ -109,7 +108,7 @@ const ProjectPage = () => {
                   </picture>
                 </div>
                 <h2
-                  className="m-0 font-primaryFont text-4xl sm:text-6xl"
+                  className="m-0 font-primaryFont text-4xl sm:text-5xl"
                   id="projectTitle"
                 >
                   {project.title}
@@ -192,17 +191,16 @@ const ProjectPage = () => {
                     </div>
                   );
                 })}
-                <div className=" m-2  grid grid-cols-1 sm:grid-cols-2 gap-2 sm:mx-0">
+                <div className=" m-2  grid grid-cols-1 sm:grid-cols-2 gap-10 sm:mx-0">
                   {project.images?.map((image, index) => {
                     if (index > 0) {
                       return (
                         <div
                           key={index}
                           onClick={() => {
-                            console.log("click");
                             setVisual(`/assets/${project.name}/${image}`);
                           }}
-                          className="group relative aspect-square w-full md:aspect-video"
+                          className="group relative aspect-square w-full md:aspect-video cursor-pointer"
                         >
                           <div
                             className="absolute left-0 top-0 h-full w-full opacity-10"

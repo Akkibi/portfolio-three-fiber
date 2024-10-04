@@ -9,26 +9,18 @@ import { useRef } from "react";
 const calculateScaleFactors = (texture: Texture, containerSize: Vector2) => {
   const containerAspectRatio = containerSize.x / containerSize.y;
   const imageAspectRatio = texture.image.width / texture.image.height;
-  //   console.log("containerAspectRatio", containerAspectRatio);
-  //   console.log("imageAspectRatio", imageAspectRatio);
+
   let scaleFactorX = 1;
   let scaleFactorY = 1;
 
   const landscapeFactor = imageAspectRatio / containerAspectRatio;
   const portraitFactor = containerAspectRatio / imageAspectRatio;
 
-  const isLandscapeModeContainer = containerAspectRatio >= 1;
   const isContainerRatioStronger = containerAspectRatio >= imageAspectRatio;
-  //   console.log("isContainerRatioStronger", isContainerRatioStronger);
-  //   console.log("isLandscapeModeContainer", isLandscapeModeContainer);
   if (isContainerRatioStronger) {
-    scaleFactorX = isLandscapeModeContainer
-      ? 1 / landscapeFactor
-      : portraitFactor;
+    scaleFactorX = landscapeFactor;
   } else {
-    scaleFactorY = isLandscapeModeContainer
-      ? 1 / landscapeFactor
-      : portraitFactor;
+    scaleFactorY = portraitFactor;
   }
 
   return { scaleFactorX, scaleFactorY };

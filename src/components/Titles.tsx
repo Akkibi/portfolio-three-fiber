@@ -51,7 +51,7 @@ const Titles: React.FC<TitlesProps> = ({
       className="textStroke w-full h-full flex flex-col justify-end  items-start p-5 sm:p-10 absolute"
     >
       <h1
-        className={`text-5xl leading-relaxed sm:text-9xl font-primaryFont font-bold stroke-outline`}
+        className={`text-[13vw] leading-relaxed sm:text-[8vw] font-primaryFont font-bold stroke-outline`}
         style={{
           color: project.colors[0],
           WebkitTextStroke: `1rem ${project.colors[1]}`,

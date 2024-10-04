@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
@@ -35,24 +35,26 @@ const About = () => {
   }
 
   const [language, setLanguage] = useState("fr");
-  const languages = ["fr", "en", "jp"];
+  const languages = useMemo(() => ["fr", "en", "jp"], []);
 
-  const handleLanguageClick = () => {
+  const handleLanguageClick = useCallback(() => {
     const currentIndex = languages.indexOf(language);
     const nextIndex = (currentIndex + 1) % languages.length;
     const nextLanguage = languages[nextIndex];
     setLanguage(nextLanguage);
-  };
-  console.log("language", language);
+  }, [language, languages]);
 
-  const refArrayTo3d = [
-    opquastRef,
-    expContainerRef,
-    introductionTextRef,
-    temoignage1sectionRef,
-    temoignage2sectionRef,
-    backToProjectsRef,
-  ];
+  const refArrayTo3d = useMemo(
+    () => [
+      opquastRef,
+      expContainerRef,
+      introductionTextRef,
+      temoignage1sectionRef,
+      temoignage2sectionRef,
+      backToProjectsRef,
+    ],
+    []
+  );
   const tl = useRef<GSAPTimeline>();
 
   useGSAP(
@@ -548,7 +550,6 @@ const About = () => {
   );
   useEffect(() => {
     document.title = "À propos d'Akira";
-    console.log(document.body);
     if (!scrollRef.current) return;
     scrollRef.current.addEventListener("scroll", calculateScrollPercent);
     if (window.innerWidth < 900) {

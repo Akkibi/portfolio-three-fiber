@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -30,6 +30,16 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   const navigate = useNavigate();
   const planeRef = useRef<THREE.Mesh>(null!);
   const { invalidate } = useThree();
+  const planeScale = useMemo(() => {
+    return {
+      x: isMobile ? viewport.width - 1 : viewport.width - 3,
+      y: isMobile ? viewport.width - 1 : viewport.height - 3,
+    };
+  }, [isMobile, viewport.width, viewport.height]);
+
+  // useEffect(() => {
+  //   console.log("real planeScale", planeScale);
+  // }, [planeScale]);
 
   useGSAP(() => {
     const pos = progressPosition(
@@ -109,8 +119,8 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         ease: "expo.out",
       });
       gsap.to(planeRef.current.scale, {
-        x: isMobile ? viewport.width - 1 : viewport.width - 3,
-        y: isMobile ? viewport.width - 1 : viewport.height - 3,
+        x: planeScale.x,
+        y: planeScale.y,
         duration: 1,
         ease: "expo.out",
       });
@@ -120,7 +130,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         ease: "expo.out",
       });
     }
-  }, [isOpen, viewport, isHome]);
+  }, [isOpen, isHome, planeScale]);
 
   return (
     <mesh
@@ -136,10 +146,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       <ThumbNailShader
         name={project.name}
         grayscale={progressGrayScale(progress - index)}
-        planeScale={{
-          x: isMobile ? viewport.width - 1 : viewport.width - 3,
-          y: isMobile ? viewport.width - 1 : viewport.height - 3,
-        }}
+        planeScale={planeScale}
       />
     </mesh>
   );
