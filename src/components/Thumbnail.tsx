@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -36,10 +36,6 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
       y: isMobile ? viewport.width - 1 : viewport.height - 3,
     };
   }, [isMobile, viewport.width, viewport.height]);
-
-  // useEffect(() => {
-  //   console.log("real planeScale", planeScale);
-  // }, [planeScale]);
 
   useGSAP(() => {
     const pos = progressPosition(
