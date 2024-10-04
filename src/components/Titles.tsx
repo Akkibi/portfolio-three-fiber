@@ -51,11 +51,11 @@ const Titles: React.FC<TitlesProps> = ({
       className="textStroke w-full h-full flex flex-col justify-end  items-start p-5 sm:p-10 absolute"
     >
       <h1
-        className="text-9xl font-primaryFont font-bold stroke-outline"
+        className={`text-5xl leading-relaxed sm:text-9xl font-primaryFont font-bold stroke-outline`}
         style={{
           color: project.colors[0],
-          //   WebkitTextStroke: `1rem ${project.colors[1]}`,
-          textShadow: `-10px -10px 0 ${project.colors[1]}, 10px -10px 0 ${project.colors[1]}, -10px 10px 0 ${project.colors[1]}, 10px 10px 0 ${project.colors[1]}`,
+          WebkitTextStroke: `1rem ${project.colors[1]}`,
+          textShadow: `-10px -10px 0 ${project.colors[1]}, 10px -10px 0 ${project.colors[1]}, -10px 10px 0 ${project.colors[1]}, 10px 10px 0 ${project.colors[1]}, 10px 0 0 ${project.colors[1]}, 0 10px 0 ${project.colors[1]}, -10px 0 0 ${project.colors[1]}, 0 -10px 0 ${project.colors[1]}`,
         }}
       >
         {project.title.toUpperCase()}

@@ -42,7 +42,7 @@ const ProjectPage = () => {
                 console.log("click");
                 setVisual(null);
               }}
-              className="h-screen w-screen fixed z-20 top-0 left-0 backdrop-blur-lg"
+              className="inset-0 fixed z-20 top-0 left-0 backdrop-blur-lg"
             >
               <div
                 className="h-full w-full opacity-50 absolute inset-0 -z-10"
@@ -71,17 +71,24 @@ const ProjectPage = () => {
           </Link>
           <div className="w-full">
             <div className="fixed h-40 w-full bottom-0 -z-10">
-              <div className="gap-20 h-40 items-center flex w-full justify-center">
-                <Button path={"/"} innerSite={true}>
+              <div
+                className="gap-20 h-40 items-center flex w-full justify-center"
+                style={{ backgroundColor: project.colors[0] }}
+              >
+                <Button path={"/"} innerSite={true} color={project.colors[1]}>
                   Home
                 </Button>
-                <Button path={"/about"} innerSite={true}>
+                <Button
+                  path={"/about"}
+                  innerSite={true}
+                  color={project.colors[1]}
+                >
                   About
                 </Button>
               </div>
             </div>
             <div
-              className="p-5 mb-40"
+              className="mb-40"
               style={{
                 color: project.colors[0],
                 backgroundColor: project.colors[1],

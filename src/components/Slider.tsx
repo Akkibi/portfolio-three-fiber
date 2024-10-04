@@ -129,7 +129,7 @@ const Slider = () => {
   return (
     <>
       <Navbar progress={progress} isMobile={isMobile} isHome={isHome} />
-      <div className="h-[100svh] w-full" id="canvas">
+      <div className="h-[100svh] w-full relative" id="canvas">
         <div className="h-full w-full absolute z-10 pointer-events-none">
           {projectsData.map((project, i) => (
             <Titles
