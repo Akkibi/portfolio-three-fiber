@@ -41,7 +41,7 @@ const ProjectPage = () => {
               onClick={() => {
                 setVisual(null);
               }}
-              className="inset-0 fixed z-20 top-0 left-0 backdrop-blur-lg cursor-pointer"
+              className="inset-0 fixed z-50 top-0 left-0 backdrop-blur-lg cursor-pointer"
             >
               <div
                 className="h-full w-full opacity-50 absolute inset-0 -z-10"
@@ -53,7 +53,7 @@ const ProjectPage = () => {
           <Link
             to={"/"}
             tabIndex={0}
-            className="fixed z-10 top-5 left-5 sm:top-10 sm:left-10 h-10 w-10 rounded-full"
+            className="fixed z-20 top-auto bottom-5 left-auto right-5 sm:top-10 sm:bottom-auto sm:left-10 h-10 w-10 rounded-full"
             style={{ backgroundColor: project.colors[0] }}
             id="back"
           >

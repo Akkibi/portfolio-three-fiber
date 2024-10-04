@@ -1,6 +1,24 @@
 [
   {
     "type": "Developpeur",
+    "name": "shredder",
+    "title": "Shredder",
+    "description": [
+      "C'est lorsque j'ai decouvert l'animation sur ios de destruction de carte que je me suis demandé comment je m'y serait pris pour le faire, s'en s'est suivis deux jour de developpement ou j'ai tenté de recréer leur effet.",
+      "Realisé avec React Gsap et tailwind, je n'ai utilisé que des outils que je conaissait dejà, le challenge à été de les utiliser dans un cadre nouveau."
+    ],
+    "images": ["start.png", "shredding.png", "shredded.png"],
+    "webpImages": ["start.webp", "shredding.webp", "shredded.webp"],
+    "list": {
+      "Date": "17/10/2024",
+      "Cadre": "Projet personnel",
+      "Technologies": "React.js, Gsap, TailwindCSS"
+    },
+    "link": ["https://shredder-liart.vercel.app/", "Voir le site"],
+    "colors": ["#eed0ff", "#100020"]
+  },
+  {
+    "type": "Developpeur",
     "name": "fiber-slider",
     "title": "Three Fiber Slider",
     "description": [
