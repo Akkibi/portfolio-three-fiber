@@ -75,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ progress, isMobile, isHome }) => {
           </p>
         </div>
         <div className="flex flex-col place-items-end gap-4 absolute bottom-0 right-0 p-5 sm:p-10">
-          <Button path="Akira-valade-cv.pdf" innerSite={false}>
+          <Button path="akira-valade-cv.pdf" innerSite={false}>
             CV
           </Button>
           <Button path="https://www.instagram.com/akkibi_/" innerSite={false}>
