@@ -127,7 +127,7 @@ const Slider = () => {
   }, [prog]);
 
   return (
-    <>
+    <main className="z-10 relative">
       <Navbar progress={progress} isMobile={isMobile} isHome={isHome} />
       <div className="h-[100svh] w-full relative" id="canvas">
         <div className="h-full w-full absolute z-10 pointer-events-none">
@@ -163,7 +163,7 @@ const Slider = () => {
           </group>
         </Canvas>
       </div>
-    </>
+    </main>
   );
 };
 
