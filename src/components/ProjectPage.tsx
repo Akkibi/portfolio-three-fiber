@@ -8,6 +8,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProjectPage = () => {
+  const [delayFinished, setDelayFinished] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const project = useMemo<ProjectType | undefined>(() => {
@@ -36,9 +37,17 @@ const ProjectPage = () => {
     };
   }, [handleKeyDown]);
 
+  // add a delay on the load of the page
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setDelayFinished(true);
+    }, 1000);
+    return () => clearTimeout(delay);
+  }, []);
+
   return (
     <>
-      {project && (
+      {delayFinished && project && (
         <>
           {visual && (
             <div className="inset-0 fixed z-50 top-0 left-0 backdrop-blur-lg cursor-pointer">

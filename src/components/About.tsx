@@ -676,7 +676,7 @@ const About = () => {
           }
         </p>
         <div
-          className="h-full w-full z-0 absolute bg-[url(https://akirav.art/akiravaladeillustration.png)] bg-center bg-no-repeat bg-cover"
+          className="h-full w-full z-0 absolute bg-[url(/akiravaladeillustration.png)] bg-center bg-no-repeat bg-cover"
           style={{
             clipPath: "polygon(0% 50%, 100% 50%, 100% 50%, 0 50%)",
             boxShadow: "inset 0 0 0 100vmax rgba(0, 0, 0, .2)",
@@ -945,11 +945,7 @@ const About = () => {
               }}
             ></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vh] bg-black overflow-hidden border-2 border-solid border-black rounded-xl scale-[0.65] sm:scale-100">
-              <img
-                src="https://akirav.art/opquast-logo.svg"
-                className="w-full p-0 m-0"
-                alt=""
-              />
+              <img src="/opquast-logo.svg" className="w-full p-0 m-0" alt="" />
             </div>
           </div>
           <div className="sm:w-0 flex justify-center items-center w-full h-0 sm:h-full overflow-visible z-10 relative">
