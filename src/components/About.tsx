@@ -83,7 +83,7 @@ const About = () => {
         .fromTo(
           backgroundAiImageRef.current,
           {
-            opacity: 1,
+            opacity: 0.5,
             clipPath: "inset(50% 0% 50% 0%)",
           },
           {
@@ -579,11 +579,33 @@ const About = () => {
       className="max-h-[100svh] overflow-y-scroll fixed inset-0 w-full bg-black z-50"
       ref={scrollRef}
     >
-      <div id="scroll" className="h-[3000vh] w-full"></div>
+      <div
+        id="scroll"
+        className="h-[1000vh] w-full"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, .1) .2vh, transparent .2vh), linear-gradient(90deg, rgba(255, 255, 255, .1) .2vh, transparent .2vh)",
+          backgroundSize: "100vw 50vh",
+          backgroundPosition: "50vw 0vh",
+          backgroundRepeat: "repeat",
+        }}
+      ></div>
       <div
         className=" h-screen w-full fixed pointer-events-none top-0 left-0 [perspective:800px]"
         ref={containerRef}
       >
+        {/* <div
+          className="h-full w-full absolute top-0 left-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255, 255, 255, .15) .2vh, transparent .2vh), linear-gradient(90deg, rgba(255, 255, 255, .15) .2vh, transparent .2vh)",
+            backgroundSize: "8vh 8vh",
+            backgroundPosition: "2vh 2vh",
+            backgroundRepeat: "repeat",
+          }} 
+        >
+        </div>
+           */}
         <h2 className=" top-10 z-10 right-10 absolute text-xl sm:text-xxl font-primaryFont">
           AKIRA VALADE
         </h2>
@@ -673,16 +695,6 @@ const About = () => {
             boxShadow: "inset 0 0 0 100vmax rgba(0, 0, 0, .2)",
           }}
           ref={backgroundAiImageRef}
-        ></div>
-        <div
-          className="h-full w-full absolute top-0 left-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255, 255, 255, .15) .2vh, transparent .2vh), linear-gradient(90deg, rgba(255, 255, 255, .15) .2vh, transparent .2vh)",
-            backgroundSize: "8vh 8vh",
-            backgroundPosition: "2vh 2vh",
-            backgroundRepeat: "repeat",
-          }}
         ></div>
         <div
           className="top-1/2 left-1/2 h-[15vh] overflow-y-hidden absolute min-w-fit z-10"
