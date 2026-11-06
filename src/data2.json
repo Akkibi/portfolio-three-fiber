@@ -15,7 +15,7 @@
         "Cadre": "Projet personnel",
         "Technologies": "React.js, Three.js, React-three-fiber, Gsap"
       },
-      "link": ["https://fiber-slider.vercel.app/", "Voir le site"],
+      "link": ["https://fiber-slider.akkibi.art/", "Voir le site"],
       "colors": ["#440022", "#ffbbdd"]
     },
     {
@@ -50,7 +50,7 @@
         "Cadre": "BUT MMI",
         "Technologies": "React.js, TailwindCSS, React-draggable, Gsap"
       },
-      "link": ["https://elios-os.vercel.app/", "Voir le site"],
+      "link": ["https://elios-os.akkibi.art/", "Voir le site"],
       "colors": ["#d2f8ef", "#05080d"]
     }
   ],
